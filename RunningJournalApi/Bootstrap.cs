@@ -1,4 +1,5 @@
 ﻿using System.Web.Http;
+using Newtonsoft.Json.Serialization;
 
 namespace RunningJournalApi
 {
@@ -14,6 +15,8 @@ namespace RunningJournalApi
                     controller = "Journal",
                     id = RouteParameter.Optional
                 });
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver =
+                new CamelCasePropertyNamesContractResolver();
         }
     }
 }
