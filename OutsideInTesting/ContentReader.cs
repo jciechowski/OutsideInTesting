@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using Newtonsoft.Json;
 
 namespace OutsideInTesting
@@ -17,13 +16,10 @@ namespace OutsideInTesting
                 JsonConvert.DeserializeObject(t.Result));
         }
 
-        public static Task<XDocument> ReadAsXmlAsync(this HttpContent content)
+        public static dynamic ToJObject(this object value)
         {
-            if (content == null)
-                throw new ArgumentNullException(nameof(content));
-
-            return content.ReadAsStringAsync().ContinueWith(t =>
-                XDocument.Parse(t.Result));
+            return JsonConvert.DeserializeObject(
+                JsonConvert.SerializeObject(value));
         }
     }
 }
