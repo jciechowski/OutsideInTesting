@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RunningJournalApi.Acceptance", "OutsideInTesting\RunningJournalApi.Acceptance.csproj", "{4BA0E118-6144-4E7B-9D3B-85ACECE39ACB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RunningJournalApi.AcceptanceTests", "OutsideInTesting\RunningJournalApi.AcceptanceTests.csproj", "{4BA0E118-6144-4E7B-9D3B-85ACECE39ACB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RunningJournalApi", "RunningJournalApi\RunningJournalApi.csproj", "{655C78A9-A0F1-4633-9EDB-126B19A23310}"
 EndProject
