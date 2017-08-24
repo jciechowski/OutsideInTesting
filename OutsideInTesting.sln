@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RunningJournalApi.Acceptanc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RunningJournalApi", "RunningJournalApi\RunningJournalApi.csproj", "{655C78A9-A0F1-4633-9EDB-126B19A23310}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RunningJournalApi.UnitTests", "RunningJournalApi.UnitTests\RunningJournalApi.UnitTests.csproj", "{F77BB7DC-C4B7-464A-B404-E2A103464536}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{655C78A9-A0F1-4633-9EDB-126B19A23310}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{655C78A9-A0F1-4633-9EDB-126B19A23310}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{655C78A9-A0F1-4633-9EDB-126B19A23310}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F77BB7DC-C4B7-464A-B404-E2A103464536}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F77BB7DC-C4B7-464A-B404-E2A103464536}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F77BB7DC-C4B7-464A-B404-E2A103464536}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F77BB7DC-C4B7-464A-B404-E2A103464536}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
