@@ -60,7 +60,10 @@ namespace OutsideInTesting
         }
 
         [Test]
-        public void GetRootReturnsCorrectEntryFromDatabase()
+        [TestCase("foo")]
+        [TestCase("bar")]
+        [TestCase("baz")]
+        public void GetRootReturnsCorrectEntryFromDatabase(string userName)
         {
             dynamic entry = new ExpandoObject();
             entry.time = DateTimeOffset.Now;
@@ -70,11 +73,12 @@ namespace OutsideInTesting
             var expected = ((object) entry).ToJObject();
             var connStr = ConfigurationManager.ConnectionStrings["running-journal"].ConnectionString;
             var db = Database.OpenConnection(connStr);
-            var userId = db.User.Insert(Username: "foo").UserId;
+            db.User.Insert(Username: userName);
+            var userId = db.User.FindAllByUserName(userName).Single().UserId;
             entry.UserId = userId;
             db.JournalEntry.Insert(entry);
 
-            using (var client = HttpClientFactory.Create())
+            using (var client = HttpClientFactory.Create(userName))
             {
                 var response = client.GetAsync("").Result;
 
