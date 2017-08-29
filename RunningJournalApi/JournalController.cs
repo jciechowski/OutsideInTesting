@@ -9,10 +9,16 @@ namespace RunningJournalApi
 {
     public class JournalController : ApiController
     {
+        private readonly IJournalEntriesQuery _journalEntriesQuery;
+
+        public JournalController(IJournalEntriesQuery journalEntriesQuery)
+        {
+            _journalEntriesQuery = journalEntriesQuery;
+        }
+
         public HttpResponseMessage Get()
         {
-            SimpleWebToken.TryParse(Request.Headers.Authorization.Parameter, out var swt);
-            var userName = swt.Single(c => c.Type == "userName").Value;
+            var userName = GetUserName();
             var connStr = ConfigurationManager.ConnectionStrings["running-journal"].ConnectionString;
             var db = Database.OpenConnection(connStr);
 
@@ -26,8 +32,7 @@ namespace RunningJournalApi
 
         public HttpResponseMessage Post(JournalEntryModel journalEntry)
         {
-            SimpleWebToken.TryParse(Request.Headers.Authorization.Parameter, out var swt);
-            var userName = swt.Single(c => c.Type == "userName").Value;
+            var userName = GetUserName();
             var connStr = ConfigurationManager.ConnectionStrings["running-journal"].ConnectionString;
             var db = Database.OpenConnection(connStr);
 
@@ -38,6 +43,13 @@ namespace RunningJournalApi
                 Distance: journalEntry.Distance,
                 Duration: journalEntry.Duration);
             return Request.CreateResponse();
+        }
+
+        private string GetUserName()
+        {
+            SimpleWebToken.TryParse(Request.Headers.Authorization.Parameter, out var swt);
+            var userName = swt.Single(c => c.Type == "userName").Value;
+            return userName;
         }
     }
 }

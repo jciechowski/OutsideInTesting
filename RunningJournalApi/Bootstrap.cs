@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Controllers;
+using System.Web.Http.Dispatcher;
 using Newtonsoft.Json.Serialization;
 using RunningJournalApi.Properties;
 
@@ -21,6 +24,8 @@ namespace RunningJournalApi
                 });
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver =
                 new CamelCasePropertyNamesContractResolver();
+
+            config.Services.Replace(typeof(IHttpControllerActivator), new CompositionRoot());
         }
 
         public static void InstallDatabase()
@@ -78,6 +83,14 @@ namespace RunningJournalApi
                     cmd.ExecuteNonQuery();
                 }
             }
+        }
+    }
+
+    public class CompositionRoot : IHttpControllerActivator
+    {
+        public IHttpController Create(HttpRequestMessage request, HttpControllerDescriptor controllerDescriptor, Type controllerType)
+        {
+            throw new NotImplementedException();
         }
     }
 }
