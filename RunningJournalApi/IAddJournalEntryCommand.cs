@@ -2,6 +2,6 @@
 {
     public interface IAddJournalEntryCommand
     {
-        void AddJournalEntry(JournalEntryModel journal, string userName);
+        void AddJournalEntry(JournalEntryModel journalEntry, string userName);
     }
 }

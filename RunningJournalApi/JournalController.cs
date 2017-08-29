@@ -10,38 +10,31 @@ namespace RunningJournalApi
     public class JournalController : ApiController
     {
         private readonly IJournalEntriesQuery _journalEntriesQuery;
+        private readonly IAddJournalEntryCommand _addCommand;
 
-        public JournalController(IJournalEntriesQuery journalEntriesQuery)
+        public JournalController(IJournalEntriesQuery journalEntriesQuery, IAddJournalEntryCommand addCommand)
         {
             _journalEntriesQuery = journalEntriesQuery;
+            _addCommand = addCommand;
         }
 
         public HttpResponseMessage Get()
         {
             var userName = GetUserName();
-            var connStr = ConfigurationManager.ConnectionStrings["running-journal"].ConnectionString;
-            var db = Database.OpenConnection(connStr);
+            var entries = _journalEntriesQuery.GetJournalEntries(userName);
 
-            var entries = db.JournalEntry.FindAll(db.JournalEntry.User.Username == userName)
-                .ToArray<JournalEntryModel>();
             return Request.CreateResponse(HttpStatusCode.OK, new JournalModel
             {
-                Entries = entries
+                Entries = entries.ToArray()
             });
         }
 
         public HttpResponseMessage Post(JournalEntryModel journalEntry)
         {
             var userName = GetUserName();
-            var connStr = ConfigurationManager.ConnectionStrings["running-journal"].ConnectionString;
-            var db = Database.OpenConnection(connStr);
 
-            var userId = db.User.Insert(Username: userName).UserId;
-            db.JournalEntry.Insert(
-                UserId: userId,
-                Time: journalEntry.Time,
-                Distance: journalEntry.Distance,
-                Duration: journalEntry.Duration);
+             _addCommand.AddJournalEntry(journalEntry, userName);
+
             return Request.CreateResponse();
         }
 
