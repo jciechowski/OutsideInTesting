@@ -1,16 +1,14 @@
-﻿using System.Configuration;
-using System.Linq;
+﻿using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using Simple.Data;
 
 namespace RunningJournalApi
 {
     public class JournalController : ApiController
     {
-        private readonly IJournalEntriesQuery _journalEntriesQuery;
         private readonly IAddJournalEntryCommand _addCommand;
+        private readonly IJournalEntriesQuery _journalEntriesQuery;
 
         public JournalController(IJournalEntriesQuery journalEntriesQuery, IAddJournalEntryCommand addCommand)
         {
@@ -33,7 +31,7 @@ namespace RunningJournalApi
         {
             var userName = GetUserName();
 
-             _addCommand.AddJournalEntry(journalEntry, userName);
+            _addCommand.AddJournalEntry(journalEntry, userName);
 
             return Request.CreateResponse();
         }

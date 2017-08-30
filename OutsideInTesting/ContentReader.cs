@@ -21,5 +21,14 @@ namespace OutsideInTesting
             return JsonConvert.DeserializeObject(
                 JsonConvert.SerializeObject(value));
         }
+
+        public static Task<T> ReadAsAsync<T>(this HttpContent content)
+        {
+            if(content == null)
+                throw new ArgumentNullException(nameof(content));
+
+            return content.ReadAsStringAsync().ContinueWith(t =>
+                JsonConvert.DeserializeObject<T>(t.Result));
+        }
     }
 }
