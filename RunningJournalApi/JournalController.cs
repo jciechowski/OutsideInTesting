@@ -9,16 +9,22 @@ namespace RunningJournalApi
     {
         private readonly IAddJournalEntryCommand _addCommand;
         private readonly IJournalEntriesQuery _journalEntriesQuery;
+        private readonly IUserNameProjection _userNameProjection;
 
-        public JournalController(IJournalEntriesQuery journalEntriesQuery, IAddJournalEntryCommand addCommand)
+        public JournalController(IUserNameProjection userNameProjection, IJournalEntriesQuery journalEntriesQuery,
+            IAddJournalEntryCommand addCommand)
         {
+            _userNameProjection = userNameProjection;
             _journalEntriesQuery = journalEntriesQuery;
             _addCommand = addCommand;
         }
 
         public HttpResponseMessage Get()
         {
-            var userName = GetUserName();
+            var userName = _userNameProjection.GetUserName(Request);
+            if (userName == null)
+                return Request.CreateErrorResponse(HttpStatusCode.Unauthorized, "No user name was supplied.");
+
             var entries = _journalEntriesQuery.GetJournalEntries(userName);
 
             return Request.CreateResponse(HttpStatusCode.OK, new JournalModel
@@ -29,18 +35,13 @@ namespace RunningJournalApi
 
         public HttpResponseMessage Post(JournalEntryModel journalEntry)
         {
-            var userName = GetUserName();
+            var userName = _userNameProjection.GetUserName(Request);
+            if (userName == null)
+                return Request.CreateErrorResponse(HttpStatusCode.Unauthorized, "No user name was supplied.");
 
             _addCommand.AddJournalEntry(journalEntry, userName);
 
             return Request.CreateResponse();
-        }
-
-        private string GetUserName()
-        {
-            SimpleWebToken.TryParse(Request.Headers.Authorization.Parameter, out var swt);
-            var userName = swt.Single(c => c.Type == "userName").Value;
-            return userName;
         }
     }
 }

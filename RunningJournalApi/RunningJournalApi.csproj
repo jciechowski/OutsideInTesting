@@ -67,6 +67,7 @@
     <Compile Include="CompositionRoot.cs" />
     <Compile Include="IAddJournalEntryCommand.cs" />
     <Compile Include="IJournalEntriesQuery.cs" />
+    <Compile Include="IUserNameProjection.cs" />
     <Compile Include="JournalController.cs" />
     <Compile Include="JournalEntriesQuery.cs" />
     <Compile Include="JournalEntryModel.cs" />
@@ -78,6 +79,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="SimpleWebToken.cs" />
+    <Compile Include="SimpleWebTokenUserNameProjection.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
