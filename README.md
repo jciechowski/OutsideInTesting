@@ -1,2 +1,2 @@
 # OutsideInTesting
-Code from PS Course 'Outside-In TDD' by Mark Seeman
+Code based on PluralSight Course 'Outside-In TDD' by Mark Seeman
